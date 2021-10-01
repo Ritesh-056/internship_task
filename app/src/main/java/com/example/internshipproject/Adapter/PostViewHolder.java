@@ -1,5 +1,6 @@
 package com.example.internshipproject.Adapter;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -7,12 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.internshipproject.Model.Post;
+import com.example.internshipproject.Screens.PostDetailScreen;
 import com.example.internshipproject.R;
 
 public class PostViewHolder extends RecyclerView.ViewHolder {
 
     //defining the member variables
     TextView postId , postTitle, postBody;
+    Post mPosts;
 
 
 
@@ -24,14 +27,27 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         postTitle   = itemView.findViewById(R.id.title);
         postBody    = itemView.findViewById(R.id.body);
 
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intent = new Intent(itemView.getContext(), PostDetailScreen.class);
+                intent.putExtra("postId",String.valueOf(mPosts.getPostId()));
+                itemView.getContext().startActivity(intent);
+            }
+        });
+
+
     }
 
 
     //this method set data to the UI view point.
     public  void setData(Post post){
-
-        postId.setText("id: "+String.valueOf(post.getPostId()));
-        postTitle.setText("title: "+post.getTitle());
-        postBody.setText("body: "+post.getBody());
+        mPosts = post ;
+        postId.setText("ID       => "+String.valueOf(post.getPostId()));
+        postTitle.setText("Title   => "+post.getTitle());
+        postBody.setText("Body  => "+post.getBody());
     }
 }

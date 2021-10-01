@@ -16,11 +16,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
 
     ArrayList<Post>  posts;
 
-
+   //constructor of PostAdapter with list as a parameter
     public PostAdapter(ArrayList<Post> postLists) {
         this.posts = postLists;
     }
 
+
+
+    //Declaring the view for the adapter to populate the data.
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,13 +32,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         return new PostViewHolder(view);
     }
 
+
+    //Holder set the data in the current position of every item.
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         holder.setData(posts.get(position));
     }
 
+
+    // count the size of fetched data and return its size.
     @Override
     public int getItemCount() {
         return posts.size();
     }
-}
+
+
+}//end of class
+
+

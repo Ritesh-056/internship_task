@@ -1,14 +1,17 @@
-package com.example.internshipproject;
+package com.example.internshipproject.Screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.internshipproject.Adapter.PostAdapter;
 import com.example.internshipproject.Model.Post;
+import com.example.internshipproject.PostCommentInterface;
+import com.example.internshipproject.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,11 +27,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 
-public class MainActivity extends AppCompatActivity {
+public class PostScreen extends AppCompatActivity {
 
     ArrayList<Post> postArrayList ;
     RecyclerView recyclerView ;
     private static final String TAG = "MainActivity";
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -39,14 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
         //initialization
         init();
+        setProgressDialog();
 
 
 
-        //retrofit implementation
+        //retrofit implementation with the URL
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://jsonplaceholder.typicode.com/")
                  .build();
-
 
 
         //requesting the URL for json data
@@ -57,32 +61,35 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
 
-                    JSONArray jsonArray = new JSONArray(response.body().string());
-                    Log.d(TAG, "onResponse: Item count =>" +jsonArray.length());
+                  if(response !=null){
+                      JSONArray jsonArray = new JSONArray(response.body().string());
+                      Log.d(TAG, "onResponse: Item count =>" +jsonArray.length());
 
 
-                    for(int i =0 ; i <jsonArray.length() ; i++){
+                      for(int i =0 ; i <jsonArray.length() ; i++){
 
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-
-                        //converting the jsonObject in class member variable
-
-                        int postID  =jsonObject.getInt("id");
-                        String postTitle = jsonObject.getString("title");
-                        String postBody = jsonObject.getString("body");
+                          JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 
-                        //adding the data to list
-                        postArrayList.add(new Post(postID,postTitle,postBody));
-                    }
+                          //converting the jsonObject in class member variable
+
+                          int postID  =jsonObject.getInt("id");
+                          String postTitle = jsonObject.getString("title");
+                          String postBody = jsonObject.getString("body");
 
 
-                    //set adapter in recyclerView to populate data and notify the user
-                    PostAdapter postAdapter = new PostAdapter(postArrayList);
-                    recyclerView.setAdapter(postAdapter);
-                    postAdapter.notifyDataSetChanged();
+                          //adding the data to list
+                          postArrayList.add(new Post(postID,postTitle,postBody));
+                      }
 
+
+                      //set adapter in recyclerView to populate data and notify the user
+                      PostAdapter postAdapter = new PostAdapter(postArrayList);
+                      recyclerView.setAdapter(postAdapter);
+                      postAdapter.notifyDataSetChanged();
+                      progressDialog.dismiss();
+
+                  }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -111,6 +118,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
     }
+
+    public void setProgressDialog(){
+        progressDialog = new ProgressDialog(PostScreen.this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+    }
+
+
 
 } //end of class
 

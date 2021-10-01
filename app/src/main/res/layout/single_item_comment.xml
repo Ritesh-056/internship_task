@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="@dimen/app_padding"
+    android:layout_margin="8dp"
+    android:background="@drawable/single_item_boundary"
+    android:layout_height="wrap_content">
+
+
+
+
+    <TextView
+        android:id="@+id/list_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Id"
+        android:textSize="@dimen/app_text"
+        android:textColor="@color/text_color"
+        />
+
+
+    <TextView
+        android:id="@+id/title"
+        android:textSize="@dimen/app_text"
+        android:textColor="@color/text_color"
+        android:layout_below="@id/list_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        />
+
+
+    <TextView
+        android:id="@+id/email"
+        android:textSize="@dimen/app_text"
+        android:textColor="@color/text_color"
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        />
+
+    <TextView
+        android:id="@+id/body"
+        android:textSize="@dimen/app_text"
+        android:textColor="@color/text_color"
+        android:layout_below="@id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Body"
+        />
+
+</RelativeLayout>
