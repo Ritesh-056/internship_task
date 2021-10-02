@@ -8,9 +8,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.internshipproject.Adapter.CommentAdapter;
+import com.example.internshipproject.AddCommentToApiActivity;
 import com.example.internshipproject.Model.Comment;
 import com.example.internshipproject.PostCommentInterface;
 import com.example.internshipproject.R;
@@ -28,7 +31,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class PostDetailScreen extends AppCompatActivity {
+
+//PostDetailScreenActivity
+public class PostDetailScreenActivity extends AppCompatActivity {
 
 
     //defining the class variables
@@ -37,6 +42,9 @@ public class PostDetailScreen extends AppCompatActivity {
     RecyclerView commentRecyclerView;
     ArrayList<Comment> commentsList ;
     ProgressDialog progressDialog ;
+    Button buttonAdd;
+
+    int postID;
 
     private static final String TAG = "PostDetailScreen";
 
@@ -51,6 +59,20 @@ public class PostDetailScreen extends AppCompatActivity {
         commentRecyclerView = findViewById(R.id.recyclerView);
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         commentsList = new ArrayList<>();
+        buttonAdd = findViewById(R.id.button_post);
+
+
+
+        //button to visit next page for post request.
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PostDetailScreenActivity.this, AddCommentToApiActivity.class);
+                intent.putExtra("postId",postID);
+                startActivity(intent);
+            }
+        });
+
 
 
 
@@ -61,7 +83,7 @@ public class PostDetailScreen extends AppCompatActivity {
 
         //getting the intent data
         Intent intent = getIntent();
-        int postID = Integer.parseInt(intent.getStringExtra("postId"));
+         postID = Integer.parseInt(intent.getStringExtra("postId"));
 
         Log.d(TAG, "onResponse: [postID]= " + postID);
 
@@ -148,7 +170,7 @@ public class PostDetailScreen extends AppCompatActivity {
 
     //progress dialog function
     public void setProgressDialog(){
-        progressDialog = new ProgressDialog(PostDetailScreen.this);
+        progressDialog = new ProgressDialog(PostDetailScreenActivity.this);
         progressDialog.show();
         progressDialog.setContentView(R.layout.progress_dialog);
         progressDialog.getWindow().setBackgroundDrawableResource(

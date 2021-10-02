@@ -1,12 +1,21 @@
 package com.example.internshipproject.Model;
 
-public class Post {
+import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
+
+public class Post extends  SugarRecord{
 
     // defining member variables.
+
+//
+//    @SerializedName("id")
     int postId;
+
     String title;
     String body;
 
+    public Post() {
+    }
 
     //constructor of class Post
     public Post(int postId, String title, String body) {

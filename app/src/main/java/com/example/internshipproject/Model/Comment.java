@@ -10,6 +10,11 @@ public class Comment {
 
 
 
+     public  Comment(){
+
+     }
+
+
     //creating the constructor of the Comment class
     public Comment( int id, String name, String email, String body) {
         this.id = id;

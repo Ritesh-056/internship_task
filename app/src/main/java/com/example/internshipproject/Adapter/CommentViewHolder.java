@@ -34,10 +34,10 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     //setting the value of each member variable of Comment class.
     public void setCommentData(Comment comment){
 
-          cId.setText("Id =>"+String.valueOf(comment.getId()));
-          cName.setText("Name =>"+comment.getName());
-          cEmail.setText("Email =>"+comment.getEmail());
-          cBody.setText("Body =>"+comment.getBody());
+          cId.setText(String.valueOf(comment.getId()));
+          cName.setText(comment.getName());
+          cEmail.setText(comment.getEmail());
+          cBody.setText(comment.getBody());
 
     }
 }

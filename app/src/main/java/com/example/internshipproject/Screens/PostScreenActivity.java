@@ -12,6 +12,7 @@ import com.example.internshipproject.Adapter.PostAdapter;
 import com.example.internshipproject.Model.Post;
 import com.example.internshipproject.PostCommentInterface;
 import com.example.internshipproject.R;
+import com.example.internshipproject.ServiceGenerator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -27,7 +29,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 
-public class PostScreen extends AppCompatActivity {
+public class PostScreenActivity extends AppCompatActivity {
 
     ArrayList<Post> postArrayList ;
     RecyclerView recyclerView ;
@@ -48,15 +50,46 @@ public class PostScreen extends AppCompatActivity {
 
 
         //retrofit implementation with the URL
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
-                 .build();
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("https://jsonplaceholder.typicode.com/")
+//                 .build();
 
 
         //requesting the URL for json data
 
-        PostCommentInterface postCommentInterface = retrofit.create(PostCommentInterface.class);
-        postCommentInterface.getPosts().enqueue(new Callback<ResponseBody>() {
+//
+//        ServiceGenerator.createRequest(PostCommentInterface.class).getPosts().enqueue(new Callback<List<Post>>() {
+//            @Override
+//            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+//
+//
+//                postArrayList = (ArrayList<Post>) response.body();
+//
+//                for (Post p :postArrayList
+//                     ) {
+//
+//                    Log.d(TAG, "onResponse: "+p.toString());
+////                    p.save();
+//
+//
+//                }
+//
+//                PostAdapter postAdapter = new PostAdapter(postArrayList);
+//                recyclerView.setAdapter(postAdapter);
+//                postAdapter.notifyDataSetChanged();
+//                progressDialog.dismiss();
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Post>> call, Throwable t) {
+//                   t.printStackTrace();
+//            }
+//        });
+
+
+        ServiceGenerator.createRequest(PostCommentInterface.class).getPosts().enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -73,13 +106,17 @@ public class PostScreen extends AppCompatActivity {
 
                           //converting the jsonObject in class member variable
 
-                          int postID  =jsonObject.getInt("id");
+                          int postID       = jsonObject.getInt("id");
                           String postTitle = jsonObject.getString("title");
-                          String postBody = jsonObject.getString("body");
+                          String postBody  = jsonObject.getString("body");
 
 
                           //adding the data to list
-                          postArrayList.add(new Post(postID,postTitle,postBody));
+                          Post p = new Post(postID,postTitle,postBody);
+                          p.save();
+                          postArrayList.add(p);
+                          Log.d(TAG, "onResponse: "+p.getTitle()+"body"+p.getBody());
+
                       }
 
 
@@ -120,7 +157,7 @@ public class PostScreen extends AppCompatActivity {
     }
 
     public void setProgressDialog(){
-        progressDialog = new ProgressDialog(PostScreen.this);
+        progressDialog = new ProgressDialog(PostScreenActivity.this);
         progressDialog.show();
         progressDialog.setContentView(R.layout.progress_dialog);
         progressDialog.getWindow().setBackgroundDrawableResource(

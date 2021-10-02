@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.internshipproject.Model.Post;
-import com.example.internshipproject.Screens.PostDetailScreen;
+import com.example.internshipproject.Screens.PostDetailScreenActivity;
 import com.example.internshipproject.R;
 
 public class PostViewHolder extends RecyclerView.ViewHolder {
@@ -33,7 +33,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
 
 
-                Intent intent = new Intent(itemView.getContext(), PostDetailScreen.class);
+                Intent intent = new Intent(itemView.getContext(), PostDetailScreenActivity.class);
                 intent.putExtra("postId",String.valueOf(mPosts.getPostId()));
                 itemView.getContext().startActivity(intent);
             }
