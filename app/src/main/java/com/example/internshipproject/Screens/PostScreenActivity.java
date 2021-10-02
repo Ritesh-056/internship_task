@@ -99,6 +99,10 @@ public class PostScreenActivity extends AppCompatActivity {
                       Log.d(TAG, "onResponse: Item count =>" +jsonArray.length());
 
 
+                      //deleting the class for resolving from duplication of data
+                      Post.deleteAll(Post.class);
+
+
                       for(int i =0 ; i <jsonArray.length() ; i++){
 
                           JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -112,19 +116,26 @@ public class PostScreenActivity extends AppCompatActivity {
 
 
                           //adding the data to list
-                          Post p = new Post(postID,postTitle,postBody);
+                          Post p = new Post();
+                          p.setTitle(postTitle);
+                          p.setPostId(postID);
+                          p.setBody(postBody);
+
+
+                          //saving data to local data
                           p.save();
+
+
+                          //set  post data to arraylist
                           postArrayList.add(p);
                           Log.d(TAG, "onResponse: "+p.getTitle()+"body"+p.getBody());
 
                       }
 
 
-                      //set adapter in recyclerView to populate data and notify the user
-                      PostAdapter postAdapter = new PostAdapter(postArrayList);
-                      recyclerView.setAdapter(postAdapter);
-                      postAdapter.notifyDataSetChanged();
-                      progressDialog.dismiss();
+                      //set data to adapter
+                      setAdapter(postArrayList);
+
 
                   }
 
@@ -137,6 +148,16 @@ public class PostScreenActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                List<Post> posts = Post.listAll(Post.class);
+
+                //adding data from storage to post class
+                postArrayList.addAll(posts);
+
+
+                //set data to adapter
+                setAdapter(postArrayList);
+
 
             }
         });
@@ -165,6 +186,14 @@ public class PostScreenActivity extends AppCompatActivity {
         );
     }
 
+
+    public  void setAdapter(ArrayList<Post> posts){
+
+        PostAdapter postAdapter = new PostAdapter(posts);
+        recyclerView.setAdapter(postAdapter);
+        postAdapter.notifyDataSetChanged();
+        progressDialog.dismiss();
+    }
 
 
 } //end of class

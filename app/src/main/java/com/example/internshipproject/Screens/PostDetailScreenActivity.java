@@ -17,6 +17,8 @@ import com.example.internshipproject.AddCommentToApiActivity;
 import com.example.internshipproject.Model.Comment;
 import com.example.internshipproject.PostCommentInterface;
 import com.example.internshipproject.R;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +26,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -118,6 +121,17 @@ public class PostDetailScreenActivity extends AppCompatActivity {
                         JSONArray jsonArray = new JSONArray(response.body().string());
                         Log.d(TAG, "onResponse: CommentListSize =" +jsonArray.length());
 
+                        List<Comment> comments  = Select.from(Comment.class)
+                                        .where(Condition.prop("POST_ID").eq(postID))
+                                        .list();
+
+                        for(Comment c: comments){
+                            c.delete();
+                        }
+
+
+
+
                         for(int i=0 ; i<jsonArray.length() ; i++){
 
                             //holding the every index value as a jsonObject
@@ -133,15 +147,15 @@ public class PostDetailScreenActivity extends AppCompatActivity {
 
 
                             //adding the data to list
-                            commentsList.add(new Comment(id,cName,cEmail,cBody));
+                            Comment comment =  new Comment(id,cName,cEmail,cBody,postID);
+                            comment.save();
+                            commentsList.add(comment);
 
                         }
 
-                        //setting adapter to recycler and notify the user changed data.
-                        CommentAdapter commentAdapter = new CommentAdapter(commentsList);
-                        commentRecyclerView.setAdapter(commentAdapter);
-                        commentAdapter.notifyDataSetChanged();
-                        progressDialog.dismiss();
+
+                        //setting to Adapter
+                        setAdapter(commentsList);
 
 
                     }
@@ -162,6 +176,18 @@ public class PostDetailScreenActivity extends AppCompatActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailure: =" +t.toString());
 
+
+                //selecting the data  data from the local database where the data equals to posId
+                List<Comment> comments  = Select.from(Comment.class)
+                        .where(Condition.prop("POST_ID").eq(postID))
+                        .list();
+
+                commentsList.addAll(comments);
+
+
+                //setting to Adapter
+                setAdapter(commentsList);
+
             }
         });
     }
@@ -176,6 +202,15 @@ public class PostDetailScreenActivity extends AppCompatActivity {
         progressDialog.getWindow().setBackgroundDrawableResource(
                 android.R.color.transparent
         );
+    }
+
+
+    //setting adapter function
+    public  void setAdapter(ArrayList<Comment> commentsList){
+        CommentAdapter commentAdapter = new CommentAdapter(commentsList);
+        commentRecyclerView.setAdapter(commentAdapter);
+        commentAdapter.notifyDataSetChanged();
+        progressDialog.dismiss();
     }
 
 }//end of class

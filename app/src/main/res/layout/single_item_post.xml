@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/post_id"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Id"
         android:textSize="@dimen/app_text"
@@ -17,12 +17,14 @@
 
     <TextView
         android:id="@+id/title"
-        android:textSize="@dimen/app_text"
+        android:textSize="@dimen/title_text"
         android:textColor="@color/text_color"
         android:layout_below="@id/post_id"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Title"
+
         android:maxLines="1"
         />
 

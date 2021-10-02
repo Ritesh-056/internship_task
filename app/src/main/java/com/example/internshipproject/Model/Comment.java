@@ -1,13 +1,16 @@
 package com.example.internshipproject.Model;
 
-public class Comment {
+import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
+
+public class Comment extends SugarRecord<Comment> {
 
     //defining a member variable
-      int id ;
+      int cid;
       String name;
       String email;
       String body;
-
+      int postId;
 
 
      public  Comment(){
@@ -16,24 +19,34 @@ public class Comment {
 
 
     //creating the constructor of the Comment class
-    public Comment( int id, String name, String email, String body) {
-        this.id = id;
+
+
+    public Comment(int cid, String name, String email, String body, int postId) {
+        this.cid = cid;
         this.name = name;
         this.email = email;
         this.body = body;
+        this.postId = postId;
     }
 
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
 
 
     //getter and setter of member variables.
 
 
-    public int getId() {
-        return id;
+    public int getCid() {
+        return cid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCid(int cid) {
+        this.cid = cid;
     }
 
     public String getName() {

@@ -46,8 +46,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
     //this method set data to the UI view point.
     public  void setData(Post post){
         mPosts = post ;
-        postId.setText("ID       => "+String.valueOf(post.getPostId()));
-        postTitle.setText("Title   => "+post.getTitle());
-        postBody.setText("Body  => "+post.getBody());
+        postId.setText(String.valueOf(post.getPostId()));
+        postTitle.setText(post.getTitle());
+        postBody.setText(post.getBody());
     }
 }
