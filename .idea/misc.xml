@@ -14,7 +14,8 @@
         <entry key="app/src/main/res/layout/activity_post_detail_screen.xml" value="0.34010416666666665" />
         <entry key="app/src/main/res/layout/progress_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/single_item_comment.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/single_item_post.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/single_item_post.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/single_item_post1.xml" value="0.2" />
       </map>
     </option>
   </component>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="@dimen/app_padding"
+    android:layout_height="match_parent">
+
+
+
+
+
+    <EditText
+        android:layout_marginTop="16dp"
+        android:id="@+id/userId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Id"
+        android:padding="@dimen/item_padding"
+        android:textSize="@dimen/app_text"
+        android:background="@drawable/single_item_boundary"
+        android:textColor="@color/text_color"
+        />
+
+
+    <EditText
+        android:id="@+id/postName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userId"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/single_item_boundary"
+        android:hint="Name"
+        android:padding="@dimen/item_padding"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/app_text" />
+
+
+    <EditText
+        android:layout_marginTop="8dp"
+        android:id="@+id/postEmail"
+        android:padding="@dimen/item_padding"
+        android:textSize="@dimen/app_text"
+        android:textColor="@color/text_color"
+        android:layout_below="@id/postName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/single_item_boundary"
+        android:hint="Email"
+        />
+
+    <EditText
+        android:id="@+id/postBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/postEmail"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/single_item_boundary"
+        android:hint="Body"
+        android:padding="@dimen/item_padding"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/app_text"
+
+        />
+
+
+    <Button
+        android:id="@+id/buttonPost"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/postBody"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="32dp"
+
+        android:text="POST" />
+
+</RelativeLayout>

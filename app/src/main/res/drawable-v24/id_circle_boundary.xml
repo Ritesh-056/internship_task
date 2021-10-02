@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!-- Defining the shape for border-->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    >
+
+  <!-- Choosing the color -->
+    <solid android:color="#AD1457"/>
+
+  <!-- Stroke as a boundary of code. -->
+<!--    <stroke android:width="0.5dp" android:color="@color/black"/>-->
+
+    <!-- Radius of the shape -->
+    <corners android:radius="100dp"/>
+
+</shape>
